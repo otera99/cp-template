@@ -6,7 +6,7 @@ f.write("	\"cp\": {\n")
 f.write("		\"prefix\": \"cp\",\n")
 f.write("		\"body\": [\n")
 
-source = open("template.hpp").read()
+source = open("template.cpp").read()
 
 previous_line = ""
 
