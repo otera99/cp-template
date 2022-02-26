@@ -34,3 +34,5 @@ f.write("		\"description\": \"Log output to console\"")
 f.write("	}\n")
 f.write("}\n")
 f.close()
+
+print("[INFO] generate cp.code-snippets")
