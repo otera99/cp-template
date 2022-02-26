@@ -103,7 +103,26 @@ struct io_setup {
 } io_setup_ {};
 
 void solve() {
-    
+    vc<int> ans;
+    rev_rep(i, 10) {
+        ans.eb(i);
+    }
+    out(ans);
+    ans.clear();
+    rev_rep(i, 10, 5) {
+        ans.eb(i);
+    }
+    out(ans);
+    ans.clear();
+    rev_rep1(i, 10) {
+        ans.eb(i);
+    }
+    out(ans);
+    ans.clear();
+    rev_rep1(i, 10, 5) {
+        ans.eb(i);
+    }
+    out(ans);
 }
 
 signed main() {
