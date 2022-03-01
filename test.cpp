@@ -107,7 +107,7 @@ void solve() {
     rev_rep(i, 10) {
         ans.eb(i);
     }
-    out(ans);
+    assert(ans == vc<int>{9, 8, 7, 6, 5, 4, 3, 2, 1, 0});
     ans.clear();
     rev_rep(i, 10, 5) {
         ans.eb(i);
