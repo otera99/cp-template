@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+
+import argparse
+from os import getenv, environ, pathsep, fspath
+from logging import Logger, basicConfig, getLogger
+from pathlib import Path, PurePath
+from subprocess import call, Popen, PIPE, run
+
+# 現在のPATHからcp-templateを探すような実装
+# otera-cp-libraryにいずれ入れることを想定.
+class Lib_Serach:
+    def __init__(self):
+        pass
+
+    def find_otera(self):
+        self.cur_path = Path.cwd()
+        self.count = 0
+        while self.count < 20:
+            otera_library_path = self.cur_path / "cp-template"
+            if otera_library_path.exists():
+                # print("[INFO] find path of otera-cp-library as ", str(otera_library_path))
+                return str(otera_library_path)
+            self.count += 1
+            self.cur_path = self.cur_path.parent
+
+        print("[ERROR] can not find cp-template")
+        exit(0)
+        return "can_not_find"
+
+if __name__ == "__main__":
+    basicConfig(
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        datefmt="%H:%M:%S",
+        level=getenv('LOG_LEVEL', 'INFO'),
+    )
+    parser = argparse.ArgumentParser(description='Run')
+    parser.add_argument('source', help='Source File')
+    opts = parser.parse_args()
+
+    # 工事中なので
+    # print("[WARN] sorry, you can not use now")
+    # exit(0)
+
+    lib_serach = Lib_Serach()
+    template_path = lib_serach.find_otera()
+
+    if template_path == "can_not_find":
+        exit(0)
+
+    # そのファイルが存在する時は安全のために、実行できないようにするべき
+    target_file_path = Path.cwd() / opts.source
+    if target_file_path.exists():
+        print("[ERROR] there already exists", opts.source)
+        exit(0)
+
+    target_file = open(opts.source, "w")
+    # template.cppをどこにおくか？
+    template = open(template_path + "/template.cpp").read()
+    for line in template.splitlines():
+        target_file.write(line)
+        target_file.write("\n")
+    target_file.close()
+
+    call(["code", opts.source])
+
+    # できれば、カーソルの移動までやりたい
